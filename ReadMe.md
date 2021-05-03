@@ -4,10 +4,11 @@ I'll keep in this file the todos and references just to be sure not to lose anyt
 
 ## References
   1. MosMed dataset, used to get comfortable with datatype and first measurements. Downloadable from [Lung segmentation challenge](https://gitee.com/junma11/COVID-19-CT-Seg-Benchmark#https://wiki.cancerimagingarchive.net/display/DOI/Thoracic+Volume+and+Pleural+Effusion+Segmentations+in+Diseased+Lungs+for+Benchmarking+Chest+CT+Processing+Pipelines#7c5a8c0c0cef44e488b824bd7de60428) following the [MosMed dataset link](https://mosmed.ai/en/datasets/covid19_1110/). This is related to the [article](https://doi.org/10.1101/2020.05.20.20100362)
-  2. Haralick features and related [article](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0212110)
-  3. Signed distance function [Definition on wikipedia](https://en.wikipedia.org/wiki/Signed_distance_function)
-  4. [Radiomics features "how to" guide and critical reflection](https://insightsimaging.springeropen.com/articles/10.1186/s13244-020-00887-2)
-  5. Libraries used: [PyRadiomics](https://pyradiomics.readthedocs.io/en/latest/index.html) , [Pydicom](https://pydicom.github.io/pydicom/stable/tutorials/installation.html), [ITK](https://itkpythonpackage.readthedocs.io/en/master/Quick_start_guide.html#),
+  2. NSCLC dataset, contains all DICOM images and was used as the MosMed dataset. This however does not contain the segmentations related to the images. The files are Downloadable from [NSCLC Radiomics](https://wiki.cancerimagingarchive.net/display/Public/NSCLC-Radiomics) using the [NBIA Data retriever](https://wiki.cancerimagingarchive.net/display/NBIA/Downloading+TCIA+Images)
+  3. Haralick features and related [article](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0212110)
+  4. Signed distance function [Definition on wikipedia](https://en.wikipedia.org/wiki/Signed_distance_function)
+  5. [Radiomics features "how to" guide and critical reflection](https://insightsimaging.springeropen.com/articles/10.1186/s13244-020-00887-2)
+  6. Libraries used: [PyRadiomics](https://pyradiomics.readthedocs.io/en/latest/index.html) , [Pydicom](https://pydicom.github.io/pydicom/stable/tutorials/installation.html), [ITK](https://itkpythonpackage.readthedocs.io/en/master/Quick_start_guide.html#),
 
 
 ### Description of the scripts
@@ -27,7 +28,7 @@ I'll keep in this file the todos and references just to be sure not to lose anyt
     9. Right/left balance log of ratio between the damaged percentage of left lung over right lung, definition is still a work in progress
     10. Volume percentage
 
-  * TacSegmentViz.py is a visualization tool to superimpose the segmentation of a clinical image onto the image itself. It creates a window that shows the axial, coronal and sagittal view of the images given in input and allows control over what slice is visualized via the use of three sliders situated below the images themselves. There is also the possibility to change the transparency of the image in the [0,1] range where zero makes image completely transparent(i.e. see only the mask) and 1 makes the image completely opaque(i.e. see only the image without the mask), default value is 0.33. There also is the possibility to gamma-correct the images by using a slider in the [0.1-2] range(which can be easily changed).It's run via command window and it takes as arguments.
+  * TacSegmentViz.py is a visualization tool to superimpose the segmentation of a clinical image onto the image itself. It creates a window that shows the axial, coronal and sagittal views of the images given in input and allows control over what slice is visualized via the use of three sliders situated below the images. There is also the possibility to change the transparency of the image in the [0,1] range where zero makes image completely transparent(i.e. see only the mask) and 1 makes the image completely opaque(i.e. see only the image without the mask), default value is 0.33. There also is the possibility to gamma-correct the images by using a slider in the [0.1-2] range(the range can be easily changed). It can catch mouse clicks on screen and when it does draws circles in all views on the same data point and synchronizes the view of the slices to see said point. Finally there's the option to rotate the images to aid in visualization. It's run via command window and it takes as arguments.
     1. --file the path to the image to be visualized
     2. --nii/--dcm to specify which extension the file in input has
     3. --norm to normalize the image into uint8
@@ -36,6 +37,4 @@ I'll keep in this file the todos and references just to be sure not to lose anyt
     6. --m_norm to normalize the mask into uint8
     7. --do_thresh Flags the thresholder as active and perform a threshold on 0 if nothing else is specified
     8. --threshold is to choose the value onto which we are thresholding
-  Some TO-DOs are the following:
-    1. Implement and check a mouse catcher that prints the 3D-coordinates of the pixel on which the mouse is clicked.
-    2. Create a tool that given these coordinates takes the other two views and brings them where necessary and also prints a point/dot/visualization aid onto the point chosen
+    9. --test_click was used in debugging to check if the test catcher event was behaving as desired
