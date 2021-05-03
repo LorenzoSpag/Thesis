@@ -10,6 +10,9 @@ from matplotlib.widgets import Slider, Button, MultiCursor, RadioButtons
 from matplotlib.backend_bases import MouseButton
 #from functools import partial
 
+__author__  = ['Lorenzo Spagnoli']
+__email__ = ['lorenzo.rspagnoli@gmail.com']
+
 def load_dcm (dirname):
   '''
   Load DicomDir files using SimpleITK OR Pydicom

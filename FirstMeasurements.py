@@ -13,6 +13,9 @@ from matplotlib.widgets import Slider
 from radiomics import featureextractor
 from pydicom.data import get_testdata_file
 
+__author__  = ['Lorenzo Spagnoli']
+__email__ = ['lorenzo.rspagnoli@gmail.com']
+
 """
 def Visualize_image(imageName, maskName, slice_index=None):
     '''
