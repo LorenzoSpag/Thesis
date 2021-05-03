@@ -14,17 +14,13 @@ I'll keep in this file the todos and references just to be sure not to lose anyt
   * FirstMeasurements.py contains a first, very basic approach to visualization of images and segmented pieces as well as a basic approach to measuring quantities from the segmented parts. It also contains a function to save the dictionaries resulting from the segmentation analysis into a json file. The functions contained are:
     1. Quantifier(image_path, mask_path, Log_filename , print_all_features): Takes image and segmentation(mask) and computes all features
     2. save_to_json(filename, feature_dict) : Converts all np.arrays in the dictionary of features into lists and saves the whole structure to a json file(filename.json)
-
-  Some measurements are:
-    1. Looking at the definition of energy in the Haralick features papers it can be seen that the corresponding measure in Pyradiomics is JointEnergy computed from glcm
-        JointEnergy gives an idea of how often how often valuePairs are neighbouring eachother, the higher the energy the more homogeneous is the image
-    2. Ditto for entropy definition, JointEntropy in PyRadiomics seems equivalent to the Haralick definition of entropy via the GrayLevelCooccurrenceMatrix
-          JointEntropy is a measure of randomness and variability in the intensity values within the neighobouring
+  * Some measurements are:
+    1. Looking at the definition of energy in the Haralick features papers it can be seen that the corresponding measure in Pyradiomics is JointEnergy computed from glcm. JointEnergy gives an idea of how often how often valuePairs are neighbouring eachother, the higher the energy the more homogeneous is the image
+    2. Ditto for entropy definition, JointEntropy in PyRadiomics seems equivalent to the Haralick definition of entropy via the GrayLevelCooccurrenceMatrix. JointEntropy is a measure of randomness and variability in the intensity values within the neighobouring
     3. Inertia seems to be non readymade in the PyRadiomics module, further research is needed
 
-    4. ClusterShade is a measure ofskewness and asymmetry of the GLCM, the higher the value the more asymmetric it is
-    5. ClusterProminance is a measure of skewness and uniformity of GLCM, the higher the value the more asymmetric the GLCM the lower the values the more likely it is to find a peak about
-        the mean of the GLCM with lower variability
+    4. ClusterShade is a measure of skewness and asymmetry of the GLCM, the higher the value the more asymmetric it is
+    5. ClusterProminance is a measure of skewness and uniformity of GLCM, the higher the value the more asymmetric the GLCM the lower the values the more likely it is to find a peak about the mean of the GLCM with lower variability
     6. Inverse Difference Momentum(IDM) quantifies local homogeneity of the image
     7. Numerosity(By which we mean the number of segmented lesions)
     8. Volume(i.e. volume of the segmented region)
@@ -42,4 +38,4 @@ I'll keep in this file the todos and references just to be sure not to lose anyt
     8. --threshold is to choose the value onto which we are thresholding
   Some TO-DOs are the following:
     1. Implement and check a mouse catcher that prints the 3D-coordinates of the pixel on which the mouse is clicked.
-    2. Create a tool that given these coordinates takes the other two views and brings them where necessary and also prints a point/dot/visualization aid onto the point chosen 
+    2. Create a tool that given these coordinates takes the other two views and brings them where necessary and also prints a point/dot/visualization aid onto the point chosen
