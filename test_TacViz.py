@@ -4,6 +4,9 @@ import hypothesis.strategies as st
 from hypothesis import given, assume, example
 from TacSegmentViz import inverse_rotation, rotate_indices
 
+__author__  = ['Lorenzo Spagnoli']
+__email__ = ['lorenzo.rspagnoli@gmail.com']
+
 rot = st.integers(min_value=0)
 shape = st.tuples(st.integers(min_value=1), st.integers(min_value=1))
 
