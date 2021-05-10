@@ -40,3 +40,10 @@ I'll keep in this file the todos and references just to be sure not to lose anyt
     7. --do_thresh Flags the thresholder as active and perform a threshold on 0 if nothing else is specified
     8. --threshold is to choose the value onto which we are thresholding
     9. --test_click was used in debugging to check if the test catcher event was behaving as desired
+
+  * test_TacViz.py is the script used to test the functions used in TacSegmentViz.py to find the coordinates needed to draw the points as they get clicked on. The main properties it tests are the following:
+    1. Test if the function called 'inverse_rotation' is truly the inverse of the 'rotate_indices' function by checking if the element in the matrix is truly the same
+    2. Test that any multiple of 4 and 0 rotations lead to the same output coordinates equal to input coordinates(because we are supposing 90°rotations)
+    3. test that the function 'rotate_indices' is the inverse of the 'inverse_rotation' function
+    4. Test that any reasonable shape and element coordinates leads to all positive value_selected
+    5. Test that any reasonable shape and element produce coordinates which are still valid indices within the rotated matrix

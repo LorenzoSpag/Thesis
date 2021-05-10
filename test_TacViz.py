@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 import hypothesis.strategies as st
-from hypothesis import given, assume
+from hypothesis import given, assume, example
 from TacSegmentViz import inverse_rotation, rotate_indices
 
 rot = st.integers(min_value=0)
@@ -33,6 +33,7 @@ def test_nrot_inverse(rot,cns):
     assert mat[res] == rot_mat[coord] and res==coordinates
 
 @given(rot=rot,cns=coordinates_and_shape())
+@example(rot=0, cns=[(2,5),(512,512)])
 def test_idempotence(rot,cns):
     #force rotations as multiples of four to test idempotence of the transformation. once again the inverse is defined on the original so testing inverse tests both
     coord = cns[0]
