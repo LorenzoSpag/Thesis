@@ -258,7 +258,7 @@ def find_first_nonzero_element(image):
     first_nonzero = [nonzero[i][0] for i in range(len(nonzero))]
     return tuple(first_nonzero)
 
-def rotate_indices(image_shape, n_rot, coordinates):
+def rotate_indices(image, n_rot, coordinates):
     """
     This function assumes that rotations are of 90° in the counterclockwise direction. Given the shape of the image(matrix), the numer of times it was rotated
     and the indices of a certain element in the original matrix it returns the indices of that same element but in the rotated matrix.
@@ -269,28 +269,38 @@ def rotate_indices(image_shape, n_rot, coordinates):
 
     WARNING: this assumes (row, col) indices shape, effectively this means that when giving coordinates on a plane they should be in (y,x) shape and not (x,y)
 
+    Would it be better to just pass the shape instead of the whole image????? maybe a bit more agile
+    image_shape (tuple of ints): Shape of the matrix before any rotation, i.e. shape of the original data matrix
+
     Args:
-        image_shape (tuple of ints): Shape of the matrix before any rotation, i.e. shape of the original data matrix
+        image (numpy.ndarray): Matrix before any rotation
         n_rot (int): Number of rotations the matrix underwent
         coordinates (tuple of ints) : (row, col) coordinates of the element considered
                                             ATTENTION: if thinking in (x,y), coordinates should be passed as (y,x)
 
     Returns:
         new_coord (tuple of ints): The (row, col) indices in the rotated matrix of the element considered in the original matrix
+
+    Raises:
+        ValueError: Since this function works only with two indices at a time and assumes rotation around the centre of a flat, 2D matrix this error is
+                    thrown any time a higher dimensional array is passed
     """
+    if len(image.shape)>2:
+        raise ValueError("The passed matrix has more than 2D. This function works only on flat matrices i.e. images")
+    image_shape = image.shape
     n_rot = n_rot%4
     num_rows,num_cols = image_shape
     row,col = coordinates
     if n_rot >1:
         n_rot -=1
-        new_coord = rotate_indices(image_shape, 1, coordinates)
-        return  rotate_indices((num_cols,num_rows), n_rot, new_coord)
+        new_coord = rotate_indices(image, 1, coordinates)
+        return  rotate_indices(np.rot90(image), n_rot, new_coord)
     elif n_rot==1:
         return (num_cols-col-1,row)
     elif n_rot==0:
         return coordinates
 
-def inverse_rotation(image_shape, n_rot, coordinates):
+def inverse_rotation(image, n_rot, coordinates):
     """
     This function assumes that rotations are of 90° in the counterclockwise direction. Given the rotated image(matrix) shape, the numer of times it was rotated
     and the indices of a certain element inside it this function returns the indices of that same element but in the original matrix.
@@ -300,21 +310,30 @@ def inverse_rotation(image_shape, n_rot, coordinates):
     counterclockwise rotations of 90° correspond to a single(3-m) clockwise rotation
 
     WARNING: this assumes (row, col) indices shape, effectively this means that when giving coordinates on a plane they should be in (y,x) shape and not (x,y)
-
+    image_shape (tuple of ints): Shape of the matrix rotated image, i.e. shape of the rotated data matrix
     Args:
-        image_shape (tuple of ints): Shape of the matrix rotated image, i.e. shape of the rotated data matrix
+        image (np.ndarray) : Rotated image or matrix
         n_rot (int): Number of rotations the matrix needs to undergo
         coordinates (tuple of ints) : (row, col) coordinates of the element considered
                                             ATTENTION: if thinking in (x,y), coordinates should be passed as (y,x)
 
     Returns:
         new_coord (tuple of ints): The (row, col) indices in the original matrix of the element considered in the rotated matrix
+
+    Raises:
+        ValueError: Since the function of which this is the inverse works only with two indices at a time and assumes rotation around the centre of a flat, 2D matrix
+                    this error is thrown any time a higher dimensional array is passed
     """
     n_rot = n_rot%4
-    return rotate_indices(image_shape, 4-n_rot, coordinates)
+    return rotate_indices(image, 4-n_rot, coordinates)
 
 
 def main():
+    try :
+        import seaborn as sns
+        sns.set()
+    except ImportError:
+        print('Problems importing seaborn, check if installed. Will use matplotlib')
     '''parse arguments, and reorder data to have it homogeneous'''
     args = parse_args()
 
@@ -534,7 +553,7 @@ def main():
                     z_index = saxial.val            #xyplane
                     col = event.xdata               #switching to (row,col) logic and back to be compatible with the inverse_rotation function
                     row = event.ydata
-                    (y_index, x_index) = inverse_rotation(image[z_index,...].shape, n, (round(row),round(col)))
+                    (y_index, x_index) = inverse_rotation(image[z_index,...], n, (round(row),round(col)))
                     ssagittal.set_val(x_index)       # Note that the slider controls the axis outside the plane we are seeing which so we use the remaining
                     scoronal.set_val(y_index)        # letter from xyz excluding those of the plane
 
@@ -542,7 +561,7 @@ def main():
                     col = event.xdata               #switching to (row,col) logic and back to be compatible with the inverse_rotation function
                     row = event.ydata
                     y_index = scoronal.val          #xzplane
-                    (z_index, x_index) = inverse_rotation(image[:,y_index, :].shape, n, (round(row),round(col)))
+                    (z_index, x_index) = inverse_rotation(image[:,y_index, :], n, (round(row),round(col)))
                     ssagittal.set_val(round(event.xdata))       # Note that the slider controls the axis outside the plane we are seeing which so we use the remaining
                     saxial.set_val(round(event.ydata))        # letter from xyz excluding those of the plane
 
@@ -550,21 +569,21 @@ def main():
                     x_index = ssagittal.val         #yzplane
                     col = event.xdata               #switching to (row,col) logic and back to be compatible with the inverse_rotation function
                     row = event.ydata
-                    (z_index, y_index) = inverse_rotation(image[...,x_index].shape, n, (round(row),round(col)))
+                    (z_index, y_index) = inverse_rotation(image[...,x_index], n, (round(row),round(col)))
                     scoronal.set_val(round(y_index))       # Note that the slider controls the axis outside the plane we are seeing which so we use the remaining
                     saxial.set_val(round(z_index))        # letter from xyz excluding those of the plane
 
                 #Draw coordinated circles on the point onto which the user clicked, to determine where to put the circle transform use the inverse of the inverse_rotation
                 #i.e. rotate_indices
-                z_draw, y_draw = rotate_indices(image[...,x_index].shape, n, (z_index,y_index))
+                z_draw, y_draw = rotate_indices(image[...,x_index], n, (z_index,y_index))
                 sag_cir = plt.Circle((y_draw, z_draw),7,color='green', alpha = 0.5)
                 sagittal.add_artist(sag_cir)
 
-                z_draw, x_draw = rotate_indices(image[:,y_index,:].shape, n, (z_index,x_index))
+                z_draw, x_draw = rotate_indices(image[:,y_index,:], n, (z_index,x_index))
                 cor_cir = plt.Circle((x_draw, z_draw),7,color='green', alpha = 0.5)
                 coronal.add_artist(cor_cir)
 
-                y_draw, x_draw = rotate_indices(image[z_index,...].shape, n, (y_index,x_index))
+                y_draw, x_draw = rotate_indices(image[z_index,...], n, (y_index,x_index))
                 ax_cir = plt.Circle((x_draw, y_draw),7,color='green', alpha = 0.5)
                 axial.add_artist(ax_cir)
 
