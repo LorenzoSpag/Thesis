@@ -13,7 +13,7 @@
     8. --threshold is to choose the value onto which we are thresholding
     9. --test_click was used in debugging to check if the test catcher event was behaving as desired
 
-  It's run via command window. For example it can be called, supposing that the script is in a folder which also contains the data from [MosMed dataset link](https://mosmed.ai/en/datasets/covid19_1110/) in a folder called "MosMed_Labeled_Dataset", using:
+  It t can be called via I-python shell, supposing that the script is in a folder which also contains the data from [MosMed dataset link](https://mosmed.ai/en/datasets/covid19_1110/) in a folder called "MosMed_Labeled_Dataset", using:
   ```
   %run TacSegmentViz.py --file=./MosMed_Labeled_Dataset/COVID19_1110/studies/CT-1/study_0264.nii.gz --nii --mask=./MosMed_Labeled_Dataset/COVID19_1110/masks/study_0264_mask.nii.gz --m_nii --do_thresh --threshold=500
   ```
