@@ -13,6 +13,11 @@ from matplotlib.backend_bases import MouseButton
 __author__  = ['Lorenzo Spagnoli']
 __email__ = ['lorenzo.rspagnoli@gmail.com']
 
+'''
+   Loading the data in memory has been adapted from Nico Curti Medical_viewer.py visible at https://gist.github.com/Nico-Curti/86678eb42f72a32bad53475ff665c8ff on which 
+   i made a contribution to update the point marker identification.
+'''
+
 def load_dcm (dirname):
   '''
   Load DicomDir files using SimpleITK OR Pydicom
