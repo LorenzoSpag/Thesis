@@ -5,7 +5,6 @@
   ```
   %run TacSegmentViz.py --file=./MosMed_Labeled_Dataset/COVID19_1110/studies/CT-1/study_0264.nii.gz --nii --mask=./MosMed_Labeled_Dataset/COVID19_1110/masks/study_0264_mask.nii.gz --m_nii --do_thresh --threshold=500
   ```
-
   And it takes as arguments.
     1. --file the path to the image to be visualized
     2. --nii/--dcm to specify which extension the file in input has
@@ -25,7 +24,7 @@
     4. Test that any reasonable shape and element coordinates leads to all positive value_selected
     5. Test that any reasonable shape and element produce coordinates which are still valid indices within the rotated matrix
 
-  
+
 ## References
   1. MosMed dataset, used to get comfortable with datatype and first measurements. Downloadable from [Lung segmentation challenge](https://gitee.com/junma11/COVID-19-CT-Seg-Benchmark#https://wiki.cancerimagingarchive.net/display/DOI/Thoracic+Volume+and+Pleural+Effusion+Segmentations+in+Diseased+Lungs+for+Benchmarking+Chest+CT+Processing+Pipelines#7c5a8c0c0cef44e488b824bd7de60428) following the [MosMed dataset link](https://mosmed.ai/en/datasets/covid19_1110/). This is related to the [article](https://doi.org/10.1101/2020.05.20.20100362)
   2. NSCLC dataset, contains all DICOM images and was used as the MosMed dataset. This however does not contain the segmentations related to the images. The files are Downloadable from [NSCLC Radiomics](https://wiki.cancerimagingarchive.net/display/Public/NSCLC-Radiomics) using the [NBIA Data retriever](https://wiki.cancerimagingarchive.net/display/NBIA/Downloading+TCIA+Images)
