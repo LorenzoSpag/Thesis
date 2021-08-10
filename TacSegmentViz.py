@@ -384,7 +384,8 @@ def main():
     sagittal.axis('off')
     coronal.set_title('Coronal')
     coronal.axis('off')
-
+      
+    #See segmentation and central region of the lung by avoiding the first few slices or starting from the middle directly
     init_axial = find_first_nonzero_element(mask)[0] if not find_first_nonzero_element(mask)[0]<5 else image.shape[0]//2
     init_sagittal = find_first_nonzero_element(mask)[2] if not find_first_nonzero_element(mask)[0]<5 else image.shape[2]//2
     init_coronal = find_first_nonzero_element(mask)[1] if not find_first_nonzero_element(mask)[0]<5 else image.shape[1]//2
