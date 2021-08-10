@@ -25,24 +25,7 @@
     4. Test that any reasonable shape and element coordinates leads to all positive value_selected
     5. Test that any reasonable shape and element produce coordinates which are still valid indices within the rotated matrix
 
-  * FirstMeasurements.py contains the first, very basic approach to visualization of images and segmented pieces which is to be considered obsolete and substituted by TacSegmentViz.py. There is also a basic approach to measuring radiomic quantities from the segmented parts using PyRadiomics. It also contains a function to save the dictionaries resulting from the feature extraction into a json file. The functions contained are:
-    1. Quantifier(image_path, mask_path, Log_filename , print_all_features): Takes image and segmentation(mask) and computes all features
-    2. save_to_json(filename, feature_dict) : Converts all np.arrays in the dictionary of features into lists and saves the whole structure to a json file(filename.json)
-
-    Some of the measurements available within the aforementioned script are:
-
-    1. Looking at the definition of energy in the Haralick features papers it can be seen that the corresponding measure in Pyradiomics is JointEnergy computed from glcm. JointEnergy gives an idea of how often how often valuePairs are neighbouring eachother, the higher the energy the more homogeneous is the image
-    2. Ditto for entropy definition, JointEntropy in PyRadiomics seems equivalent to the Haralick definition of entropy via the GrayLevelCooccurrenceMatrix. JointEntropy is a measure of randomness and variability in the intensity values within the neighobouring
-    3. Inertia seems to be non readymade in the PyRadiomics module, further research is needed
-
-    4. ClusterShade is a measure of skewness and asymmetry of the GLCM, the higher the value the more asymmetric it is
-    5. ClusterProminance is a measure of skewness and uniformity of GLCM, the higher the value the more asymmetric the GLCM the lower the values the more likely it is to find a peak about the mean of the GLCM with lower variability
-    6. Inverse Difference Momentum(IDM) quantifies local homogeneity of the image
-    7. Numerosity(By which we mean the number of segmented lesions)
-    8. Volume(i.e. volume of the segmented region)
-    9. Right/left balance log of ratio between the damaged percentage of left lung over right lung, definition is still a work in progress
-    10. Volume percentage
-
+  
 ## References
   1. MosMed dataset, used to get comfortable with datatype and first measurements. Downloadable from [Lung segmentation challenge](https://gitee.com/junma11/COVID-19-CT-Seg-Benchmark#https://wiki.cancerimagingarchive.net/display/DOI/Thoracic+Volume+and+Pleural+Effusion+Segmentations+in+Diseased+Lungs+for+Benchmarking+Chest+CT+Processing+Pipelines#7c5a8c0c0cef44e488b824bd7de60428) following the [MosMed dataset link](https://mosmed.ai/en/datasets/covid19_1110/). This is related to the [article](https://doi.org/10.1101/2020.05.20.20100362)
   2. NSCLC dataset, contains all DICOM images and was used as the MosMed dataset. This however does not contain the segmentations related to the images. The files are Downloadable from [NSCLC Radiomics](https://wiki.cancerimagingarchive.net/display/Public/NSCLC-Radiomics) using the [NBIA Data retriever](https://wiki.cancerimagingarchive.net/display/NBIA/Downloading+TCIA+Images)
